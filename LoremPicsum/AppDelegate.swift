@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let window = UIWindow()
-        window.rootViewController = ViewController()
+        window.rootViewController = PhotosListViewController()
         window.makeKeyAndVisible()
         
         self.window = window
