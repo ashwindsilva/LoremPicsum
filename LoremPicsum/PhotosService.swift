@@ -12,10 +12,6 @@ enum PhotosServiceError: Error {
     case decodingError
 }
 
-protocol PhotosServiceProtocol {
-    func getPhotos(completion: @escaping (Result<[Photo], PhotosServiceError>) -> ())
-}
-
 // TODO: - Implement network layer
 // TODO: - Handle errors
 

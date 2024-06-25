@@ -79,7 +79,7 @@ class PhotoTableViewCell: UITableViewCell {
     
     // MARK: - Methods
     
-    func setupView() {
+    private  func setupView() {
         contentView.addSubview(horizontalStackView)
         
         NSLayoutConstraint.activate([
@@ -93,4 +93,8 @@ class PhotoTableViewCell: UITableViewCell {
         ])
     }
     
+    func configure(with viewModel: ViewModel) {
+        titleLabel.text = viewModel.title
+        subtitleLabel.text = viewModel.description
+    }
 }
