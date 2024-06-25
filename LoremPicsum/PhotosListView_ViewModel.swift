@@ -8,6 +8,9 @@
 import Foundation
 
 extension PhotosListView {
+    enum UpdateType {
+        case reload
+    }
     
     class ViewModel {
         
@@ -16,7 +19,7 @@ extension PhotosListView {
         private let photosService: PhotosService
         private(set) var photos: [Photo]
         
-        var onPhotosUpdate: (() -> ())?
+        var onPhotosUpdate: ((UpdateType) -> ())?
         
         // MARK: - Init
         
@@ -32,7 +35,7 @@ extension PhotosListView {
                 switch result {
                 case .success(let photos):
                     self.photos = photos
-                    self.onPhotosUpdate?()
+                    self.onPhotosUpdate?(.reload)
                 case .failure(let error):
                     print(error)
                 }
@@ -42,6 +45,10 @@ extension PhotosListView {
         func viewModel(for indexPath: IndexPath) -> PhotoTableViewCell.ViewModel {
             let photo = photos[indexPath.row]
             return .init(photo: photo)
+        }
+        
+        func refresh() {
+            fetchPhotos()
         }
     }
 }

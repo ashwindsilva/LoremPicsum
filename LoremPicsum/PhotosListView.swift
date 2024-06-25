@@ -18,6 +18,10 @@ class PhotosListView: UIView {
         tableView.register(PhotoTableViewCell.self, forCellReuseIdentifier: PhotoTableViewCell.reuseIdentifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
         return tableView
     }()
     
@@ -55,11 +59,22 @@ class PhotosListView: UIView {
     }
     
     private func bindViewModel() {
-        viewModel.onPhotosUpdate = { [weak self] in
+        viewModel.onPhotosUpdate = { [weak self] type in
+            guard let self else { return }
+            
             DispatchQueue.main.async {
-                self?.tableView.reloadData()
+                switch type {
+                case .reload:
+                    self.tableView.reloadData()
+                    self.tableView.refreshControl?.endRefreshing()
+                }
             }
         }
+    }
+    
+    @objc
+    private func refresh() {
+        viewModel.refresh()
     }
 }
 
