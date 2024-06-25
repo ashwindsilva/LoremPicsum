@@ -80,6 +80,8 @@ class PhotoTableViewCell: UITableViewCell {
     // MARK: - Methods
     
     private  func setupView() {
+        selectionStyle = .none
+        
         contentView.addSubview(horizontalStackView)
         
         NSLayoutConstraint.activate([
