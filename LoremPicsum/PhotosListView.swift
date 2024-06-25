@@ -15,6 +15,7 @@ class PhotosListView: UIView {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(PhotoTableViewCell.self, forCellReuseIdentifier: PhotoTableViewCell.reuseIdentifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
@@ -22,6 +23,7 @@ class PhotosListView: UIView {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
+        
         return tableView
     }()
     
@@ -38,7 +40,7 @@ class PhotosListView: UIView {
         setupView()
         
         bindViewModel()
-        viewModel.fetchPhotos()
+        viewModel.fetchInitialPhotos()
     }
     
     required init?(coder: NSCoder) {
@@ -67,6 +69,20 @@ class PhotosListView: UIView {
                 case .reload:
                     self.tableView.reloadData()
                     self.tableView.refreshControl?.endRefreshing()
+                case .newRows(let indexPaths):
+                    self.tableView.insertRows(at: indexPaths, with: .automatic)
+                }
+            }
+        }
+        
+        viewModel.onLoading = { [weak self] isLoading in
+            guard let self else { return }
+            
+            DispatchQueue.main.async {
+                if isLoading {
+                    self.tableView.tableFooterView = self.makeTableViewLoadingFooter()
+                } else {
+                    self.tableView.tableFooterView = nil
                 }
             }
         }
@@ -75,6 +91,19 @@ class PhotosListView: UIView {
     @objc
     private func refresh() {
         viewModel.refresh()
+    }
+    
+    private func makeTableViewLoadingFooter() -> UIView {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        activityIndicator.center = view.center
+        
+        view.addSubview(activityIndicator)
+        
+        return view
     }
 }
 
@@ -93,5 +122,21 @@ extension PhotosListView: UITableViewDataSource {
         cell.configure(with: viewModel.viewModel(for: indexPath))
         
         return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension PhotosListView: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        let threshold = (height / 2)
+        
+        if offsetY > contentHeight - height - threshold {
+            viewModel.loadMorePhotos()
+        }
     }
 }

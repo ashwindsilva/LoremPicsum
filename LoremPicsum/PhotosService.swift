@@ -16,8 +16,8 @@ enum PhotosServiceError: Error {
 // TODO: - Handle errors
 
 struct PhotosService {
-    func getPhotos(completion: @escaping (Result<[Photo], PhotosServiceError>) -> ()) {
-        let url = URL(string: "https://picsum.photos/v2/list")!
+    func getPhotos(at page: Int, completion: @escaping (Result<[Photo], PhotosServiceError>) -> ()) {
+        let url = URL(string: "https://picsum.photos/v2/list?page=\(page)")!
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data else {
