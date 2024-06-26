@@ -7,22 +7,32 @@
 
 import UIKit
 
+protocol LaunchScreenViewControllerDelegate: AnyObject {
+    func timeout()
+}
+
 class LaunchScreenViewController: UIViewController {
 
+    // MARK: - Properties
+    
+    weak var delegate: LaunchScreenViewControllerDelegate?
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            // TODO: navigate 
-        }
+        setTimer()
     }
+    
+    // MARK: - Methods
     
     private func setupView() {
         let logo = UIImageView(image: UIImage(named: "logo"))
         logo.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(logo)
+        view.backgroundColor = .primaryBackground
         
         NSLayoutConstraint.activate([
             logo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -30,5 +40,11 @@ class LaunchScreenViewController: UIViewController {
             logo.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             logo.widthAnchor.constraint(equalTo: logo.heightAnchor, multiplier: 1)
         ])
+    }
+    
+    private func setTimer() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+            self?.delegate?.timeout()
+        }
     }
 }

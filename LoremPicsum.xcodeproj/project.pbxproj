@@ -19,6 +19,8 @@
 		A2ED76892C2AEA0F00BBE64A /* PhotoTableViewCell_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ED76882C2AEA0F00BBE64A /* PhotoTableViewCell_ViewModel.swift */; };
 		A2ED768B2C2B94A200BBE64A /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ED768A2C2B94A200BBE64A /* ImageLoader.swift */; };
 		A2ED768D2C2BCA4B00BBE64A /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ED768C2C2BCA4B00BBE64A /* LaunchScreenViewController.swift */; };
+		A2ED768F2C2BCCBC00BBE64A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ED768E2C2BCCBC00BBE64A /* Coordinator.swift */; };
+		A2ED76912C2BCCDD00BBE64A /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ED76902C2BCCDD00BBE64A /* AppCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		A2ED76882C2AEA0F00BBE64A /* PhotoTableViewCell_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell_ViewModel.swift; sourceTree = "<group>"; };
 		A2ED768A2C2B94A200BBE64A /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		A2ED768C2C2BCA4B00BBE64A /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		A2ED768E2C2BCCBC00BBE64A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		A2ED76902C2BCCDD00BBE64A /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,7 @@
 		A25A90CF2C29D550005C3DC2 /* LoremPicsum */ = {
 			isa = PBXGroup;
 			children = (
+				A2ED768E2C2BCCBC00BBE64A /* Coordinator.swift */,
 				A25A90D02C29D550005C3DC2 /* AppDelegate.swift */,
 				A25A90D42C29D550005C3DC2 /* PhotosListViewController.swift */,
 				A25A90E42C29DC7C005C3DC2 /* PhotosListView.swift */,
@@ -81,6 +86,7 @@
 				A25A90DB2C29D552005C3DC2 /* LaunchScreen.storyboard */,
 				A25A90DE2C29D552005C3DC2 /* Info.plist */,
 				A2ED768C2C2BCA4B00BBE64A /* LaunchScreenViewController.swift */,
+				A2ED76902C2BCCDD00BBE64A /* AppCoordinator.swift */,
 			);
 			path = LoremPicsum;
 			sourceTree = "<group>";
@@ -155,12 +161,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2ED76912C2BCCDD00BBE64A /* AppCoordinator.swift in Sources */,
 				A25A90E72C29DFD2005C3DC2 /* PhotoTableViewCell.swift in Sources */,
 				A2ED76892C2AEA0F00BBE64A /* PhotoTableViewCell_ViewModel.swift in Sources */,
 				A25A90D52C29D550005C3DC2 /* PhotosListViewController.swift in Sources */,
 				A25A90E52C29DC7C005C3DC2 /* PhotosListView.swift in Sources */,
 				A25A90D12C29D550005C3DC2 /* AppDelegate.swift in Sources */,
 				A2ED768B2C2B94A200BBE64A /* ImageLoader.swift in Sources */,
+				A2ED768F2C2BCCBC00BBE64A /* Coordinator.swift in Sources */,
 				A25A90EB2C29EDF3005C3DC2 /* PhotosService.swift in Sources */,
 				A25A90E92C29ED82005C3DC2 /* Photo.swift in Sources */,
 				A2ED768D2C2BCA4B00BBE64A /* LaunchScreenViewController.swift in Sources */,
