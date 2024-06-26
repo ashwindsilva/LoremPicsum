@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol PhotosListViewDelegate: AnyObject {
+    func didSelect(_ photo: Photo, isChecked: Bool)
+}
+
 class PhotosListView: UIView {
     
     // MARK: - Views
@@ -30,6 +34,7 @@ class PhotosListView: UIView {
     // MARK: - Properties
     
     private let viewModel: ViewModel
+    weak var delegate: PhotosListViewDelegate?
     
     // MARK: - Init
     
@@ -143,5 +148,10 @@ extension PhotosListView: UITableViewDelegate {
         if offsetY > contentHeight - height - threshold {
             viewModel.loadMorePhotos()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewModel = viewModel.viewModel(for: indexPath)
+        delegate?.didSelect(viewModel.photo, isChecked: viewModel.isChecked)
     }
 }

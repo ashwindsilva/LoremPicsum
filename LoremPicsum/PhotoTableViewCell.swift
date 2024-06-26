@@ -41,6 +41,7 @@ class PhotoTableViewCell: UITableViewCell {
     
     private lazy var checkbox: UIButton = {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "checkbox_outline"), for: .normal)
         button.tintColor = .primaryText
         button.addTarget(self, action: #selector(toggleCheckbox), for: .touchUpInside)
@@ -105,6 +106,9 @@ class PhotoTableViewCell: UITableViewCell {
             
             photoImageView.widthAnchor.constraint(equalToConstant: imageSize),
             photoImageView.heightAnchor.constraint(equalToConstant: imageSize),
+            
+            checkbox.widthAnchor.constraint(equalToConstant: 50),
+            checkbox.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
     
