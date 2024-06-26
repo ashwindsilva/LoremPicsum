@@ -7,7 +7,12 @@
 
 import UIKit
 
-class ImageLoader {
+protocol ImageLoader {
+    func loadImage(from url: URL, completion: @escaping (UIImage?) -> ()) -> UUID?
+    func cancelLoad(_ uuid: UUID)
+}
+
+class RemoteImageLoader: ImageLoader {
     
     // MARK: - Properties
     

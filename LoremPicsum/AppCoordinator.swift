@@ -29,7 +29,8 @@ extension AppCoordinator: Coordinator {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
             let viewModel: PhotosListViewController.ViewModel = .init(
-                photosService: RemotePhotosService()
+                photosService: RemotePhotosService(),
+                imageLoader: RemoteImageLoader()
             )
             self?.window.rootViewController = PhotosListViewController(viewModel: viewModel)
         }

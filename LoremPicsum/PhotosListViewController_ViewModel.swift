@@ -11,10 +11,10 @@ extension PhotosListViewController {
     class ViewModel {        
         let photosListViewModel: PhotosListView.ViewModel
         
-        init(photosService: PhotosService) {
+        init(photosService: PhotosService, imageLoader: ImageLoader) {
             self.photosListViewModel = .init(
                 photosService: photosService,
-                imageLoader: .init()
+                imageLoader: imageLoader
             )
         }
         
