@@ -17,6 +17,7 @@ class PhotoTableViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .secondaryBackground
         imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -65,6 +66,9 @@ class PhotoTableViewCell: UITableViewCell {
     static let reuseIdentifier: String = "PhotoTableViewCell"
     
     private let spacing: CGFloat = 16
+    private let imageSize: CGFloat = 100
+    private var viewModel: ViewModel?
+    private var imageLoadTaskID: UUID?
     
     // MARK: - Init
     
@@ -90,13 +94,32 @@ class PhotoTableViewCell: UITableViewCell {
             horizontalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -spacing),
             horizontalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -spacing),
             
-            photoImageView.widthAnchor.constraint(equalToConstant: 100),
-            photoImageView.heightAnchor.constraint(equalToConstant: 100),
+            photoImageView.widthAnchor.constraint(equalToConstant: imageSize),
+            photoImageView.heightAnchor.constraint(equalToConstant: imageSize),
         ])
     }
     
     func configure(with viewModel: ViewModel) {
+        self.viewModel = viewModel
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.description
+        
+        imageLoadTaskID = viewModel.imageLoader.loadImage(
+            from: viewModel.imageURL(width: Int(imageSize), height: Int(imageSize))) { [weak self] image in
+                DispatchQueue.main.async {
+                    self?.photoImageView.image = image
+                }
+            }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = nil
+        subtitleLabel.text = nil
+        photoImageView.image = nil
+        
+        if let imageLoadTaskID {
+            viewModel?.imageLoader.cancelLoad(imageLoadTaskID)
+        }
     }
 }

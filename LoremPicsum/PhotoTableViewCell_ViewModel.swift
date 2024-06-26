@@ -12,6 +12,7 @@ extension PhotoTableViewCell {
         // MARK: - Properties
         
         let photo: Photo
+        let imageLoader: ImageLoader
         
         var title: String {
             return "Author: \(photo.author ?? "NA")"
@@ -30,8 +31,15 @@ extension PhotoTableViewCell {
         
         // MARK: - Init
         
-        init(photo: Photo) {
+        init(photo: Photo, imageLoader: ImageLoader) {
             self.photo = photo
+            self.imageLoader = imageLoader
+        }
+        
+        // MARK: - Methods
+        
+        func imageURL(width: Int, height: Int) -> URL {
+            return URL(string: "https://picsum.photos/id/\(photo.id)/\(width)/\(height)" )!
         }
     }
 }

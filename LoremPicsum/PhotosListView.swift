@@ -29,12 +29,17 @@ class PhotosListView: UIView {
     
     // MARK: - Properties
     
-    let viewModel: ViewModel
+    private let viewModel: ViewModel
     
     // MARK: - Init
     
     init() {
-        viewModel = .init(photosService: .init())
+        // TODO: - use DI for imageLoader
+        
+        viewModel = .init(
+            photosService: .init(),
+            imageLoader: .init()
+        )
         
         super.init(frame: .zero)
         setupView()

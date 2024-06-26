@@ -18,6 +18,7 @@ extension PhotosListView {
         // MARK: - Properties
         
         private let photosService: PhotosService
+        private let imageLoader: ImageLoader
         private(set) var photos: [Photo]
         private var page: Int
         private var hasMorePages: Bool
@@ -32,8 +33,9 @@ extension PhotosListView {
         
         // MARK: - Init
         
-        init(photosService: PhotosService) {
+        init(photosService: PhotosService, imageLoader: ImageLoader) {
             self.photosService = photosService
+            self.imageLoader = imageLoader
             self.photos = []
             self.page = 0
             self.hasMorePages = true
@@ -66,7 +68,7 @@ extension PhotosListView {
         
         func viewModel(for indexPath: IndexPath) -> PhotoTableViewCell.ViewModel {
             let photo = photos[indexPath.row]
-            return .init(photo: photo)
+            return .init(photo: photo, imageLoader: imageLoader)
         }
         
         func fetchInitialPhotos() {
