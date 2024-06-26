@@ -19,7 +19,7 @@ extension PhotosListView {
         
         private let photosService: PhotosService
         private let imageLoader: ImageLoader
-        private(set) var photos: [Photo]
+        private(set) var photos: [PhotoTableViewCell.ViewModel]
         private var page: Int
         private var hasMorePages: Bool
         private var isLoading: Bool {
@@ -66,16 +66,19 @@ extension PhotosListView {
             }
         }
         
-        func viewModel(for indexPath: IndexPath) -> PhotoTableViewCell.ViewModel {
-            let photo = photos[indexPath.row]
+        private func viewModel(for photo: Photo) -> PhotoTableViewCell.ViewModel {
             return .init(photo: photo, imageLoader: imageLoader)
+        }
+        
+        func viewModel(for indexPath: IndexPath) -> PhotoTableViewCell.ViewModel {
+            return photos[indexPath.row]
         }
         
         func fetchInitialPhotos() {
             fetchPhotos(atPage: 1) { [weak self] photos in
                 guard let self else { return }
                 
-                self.photos = photos
+                self.photos = photos.map(viewModel(for:))
                 self.onPhotosUpdate?(.reload)
             }
         }
@@ -99,7 +102,7 @@ extension PhotosListView {
                 let endIndex = startIndex + photos.count
                 let indexPaths = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0)}
 
-                self.photos.append(contentsOf: photos)
+                self.photos.append(contentsOf: photos.map(viewModel(for:)))
                 self.hasMorePages = !photos.isEmpty
                 self.onPhotosUpdate?(.newRows(indexPaths))
             }
