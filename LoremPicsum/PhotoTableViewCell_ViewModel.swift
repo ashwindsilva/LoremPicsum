@@ -13,6 +13,11 @@ extension PhotoTableViewCell {
         
         let photo: Photo
         let imageLoader: ImageLoader
+        private(set) var isChecked: Bool {
+            didSet { onChecked?(isChecked) }
+        }
+        
+        var onChecked: ((Bool) -> ())?
         
         var title: String {
             return "Author: \(photo.author ?? "NA")"
@@ -33,6 +38,7 @@ extension PhotoTableViewCell {
         
         init(photo: Photo, imageLoader: ImageLoader) {
             self.photo = photo
+            self.isChecked = false
             self.imageLoader = imageLoader
         }
         
@@ -40,6 +46,11 @@ extension PhotoTableViewCell {
         
         func imageURL(width: Int, height: Int) -> URL {
             return URL(string: "https://picsum.photos/id/\(photo.id)/\(width)/\(height)" )!
+        }
+        
+        
+        func toggleIsChecked() {
+            isChecked.toggle()
         }
     }
 }

@@ -39,6 +39,14 @@ class PhotoTableViewCell: UITableViewCell {
         return label
     }()
     
+    private lazy var checkbox: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "checkbox_outline"), for: .normal)
+        button.tintColor = .primaryText
+        button.addTarget(self, action: #selector(toggleCheckbox), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var horizontalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -47,6 +55,7 @@ class PhotoTableViewCell: UITableViewCell {
         stackView.spacing = spacing
         stackView.addArrangedSubview(photoImageView)
         stackView.addArrangedSubview(labelsStackView)
+        stackView.addArrangedSubview(checkbox)
         return stackView
     }()
     
@@ -103,6 +112,7 @@ class PhotoTableViewCell: UITableViewCell {
         self.viewModel = viewModel
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.description
+        updateCheckbox()
         
         imageLoadTaskID = viewModel.imageLoader.loadImage(
             from: viewModel.imageURL(width: Int(imageSize), height: Int(imageSize))) { [weak self] image in
@@ -110,6 +120,10 @@ class PhotoTableViewCell: UITableViewCell {
                     self?.photoImageView.image = image
                 }
             }
+        
+        viewModel.onChecked = { [weak self] _ in
+            self?.updateCheckbox()
+        }
     }
     
     override func prepareForReuse() {
@@ -121,5 +135,17 @@ class PhotoTableViewCell: UITableViewCell {
         if let imageLoadTaskID {
             viewModel?.imageLoader.cancelLoad(imageLoadTaskID)
         }
+    }
+    
+    @objc
+    private func toggleCheckbox() {
+        viewModel?.toggleIsChecked()
+    }
+    
+    private func updateCheckbox() {
+        checkbox.setImage(
+            viewModel?.isChecked ?? false ? UIImage(named: "checkbox") : UIImage(named: "checkbox_outline"),
+            for: .normal
+        )
     }
 }
