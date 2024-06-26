@@ -14,15 +14,15 @@ class PhotosListViewController: UIViewController {
     private let viewModel: ViewModel
     
     private lazy var photosListView: PhotosListView = {
-        let view = PhotosListView()
+        let view = PhotosListView(viewModel: viewModel.photosListViewModel)
         view.delegate = self
         return view
     }()
     
     // MARK: - Init
     
-    init() {
-        self.viewModel = .init()
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     

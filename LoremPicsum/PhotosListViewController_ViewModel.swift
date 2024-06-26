@@ -8,7 +8,16 @@
 import Foundation
 
 extension PhotosListViewController {
-    class ViewModel {
+    class ViewModel {        
+        let photosListViewModel: PhotosListView.ViewModel
+        
+        init(photosService: PhotosService) {
+            self.photosListViewModel = .init(
+                photosService: photosService,
+                imageLoader: .init()
+            )
+        }
+        
         func alertInfo(for photo: Photo) -> (title: String, message: String?) {
             let title: String = "Info"
             let message: String? = {

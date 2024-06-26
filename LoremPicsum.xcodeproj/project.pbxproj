@@ -22,6 +22,7 @@
 		A2ED768F2C2BCCBC00BBE64A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ED768E2C2BCCBC00BBE64A /* Coordinator.swift */; };
 		A2ED76912C2BCCDD00BBE64A /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ED76902C2BCCDD00BBE64A /* AppCoordinator.swift */; };
 		A2ED76952C2BDE3200BBE64A /* PhotosListViewController_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ED76942C2BDE3200BBE64A /* PhotosListViewController_ViewModel.swift */; };
+		A2ED76992C2BE99A00BBE64A /* RemotePhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ED76982C2BE99A00BBE64A /* RemotePhotoService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		A2ED768E2C2BCCBC00BBE64A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		A2ED76902C2BCCDD00BBE64A /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		A2ED76942C2BDE3200BBE64A /* PhotosListViewController_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosListViewController_ViewModel.swift; sourceTree = "<group>"; };
+		A2ED76982C2BE99A00BBE64A /* RemotePhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePhotoService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				A25A90DE2C29D552005C3DC2 /* Info.plist */,
 				A2ED768C2C2BCA4B00BBE64A /* LaunchScreenViewController.swift */,
 				A2ED76902C2BCCDD00BBE64A /* AppCoordinator.swift */,
+				A2ED76982C2BE99A00BBE64A /* RemotePhotoService.swift */,
 			);
 			path = LoremPicsum;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 			files = (
 				A2ED76912C2BCCDD00BBE64A /* AppCoordinator.swift in Sources */,
 				A25A90E72C29DFD2005C3DC2 /* PhotoTableViewCell.swift in Sources */,
+				A2ED76992C2BE99A00BBE64A /* RemotePhotoService.swift in Sources */,
 				A2ED76952C2BDE3200BBE64A /* PhotosListViewController_ViewModel.swift in Sources */,
 				A2ED76892C2AEA0F00BBE64A /* PhotoTableViewCell_ViewModel.swift in Sources */,
 				A25A90D52C29D550005C3DC2 /* PhotosListViewController.swift in Sources */,

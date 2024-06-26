@@ -38,17 +38,11 @@ class PhotosListView: UIView {
     
     // MARK: - Init
     
-    init() {
-        // TODO: - use DI for imageLoader
-        
-        viewModel = .init(
-            photosService: .init(),
-            imageLoader: .init()
-        )
-        
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
-        setupView()
         
+        setupView()
         bindViewModel()
         viewModel.fetchInitialPhotos()
     }
