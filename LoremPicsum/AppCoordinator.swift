@@ -25,15 +25,10 @@ class AppCoordinator {
 extension AppCoordinator: Coordinator {
     func start() {
         let launchScreenController: LaunchScreenViewController = .init()
-        launchScreenController.delegate = self
         window.rootViewController = launchScreenController
-    }
-}
-
-// MARK: - LaunchScreenViewControllerDelegate
-
-extension AppCoordinator: LaunchScreenViewControllerDelegate {
-    func timeout() {
-        window.rootViewController = PhotosListViewController()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+            self?.window.rootViewController = PhotosListViewController()
+        }
     }
 }

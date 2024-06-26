@@ -7,22 +7,15 @@
 
 import UIKit
 
-protocol LaunchScreenViewControllerDelegate: AnyObject {
-    func timeout()
-}
-
 class LaunchScreenViewController: UIViewController {
 
     // MARK: - Properties
-    
-    weak var delegate: LaunchScreenViewControllerDelegate?
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        setTimer()
     }
     
     // MARK: - Methods
@@ -40,11 +33,5 @@ class LaunchScreenViewController: UIViewController {
             logo.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             logo.widthAnchor.constraint(equalTo: logo.heightAnchor, multiplier: 1)
         ])
-    }
-    
-    private func setTimer() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
-            self?.delegate?.timeout()
-        }
     }
 }
