@@ -9,6 +9,12 @@ import Foundation
 
 extension PhotosListView {
     class ViewModel {
+        protocol Delegate: AnyObject {
+            func failedToFetchInitialPhotos(_ error: Error)
+            func failedToLoadMorePhotos(_ error: Error)
+            func failedToRefresh(_ error: Error)
+        }
+        
         // MARK: - Types
         
         enum UpdateType {
@@ -29,6 +35,8 @@ extension PhotosListView {
             }
         }
         
+        weak var delegate: Delegate?
+        
         var onPhotosUpdate: ((UpdateType) -> ())?
         var onLoading: ((Bool) -> ())?
         
@@ -45,7 +53,7 @@ extension PhotosListView {
         
         // MARK: - Methods
         
-        private func fetchPhotos(atPage page: Int, onSuccess: @escaping ([Photo]) -> ()) {
+        private func fetchPhotos(atPage page: Int, completion: @escaping (Result<[Photo], Error>) -> ()) {
             guard isLoading == false else {
                 return
             }
@@ -57,13 +65,11 @@ extension PhotosListView {
                 
                 defer { self.isLoading = false }
                 
-                switch result {
-                case .success(let photos):
+                if let photos = try? result.get(), photos.isEmpty == false {
                     self.page = page
-                    onSuccess(photos)
-                case .failure(let error):
-                    print(error)
                 }
+                
+                completion(result)
             }
         }
         
@@ -76,11 +82,16 @@ extension PhotosListView {
         }
         
         func fetchInitialPhotos() {
-            fetchPhotos(atPage: 1) { [weak self] photos in
+            fetchPhotos(atPage: 1) { [weak self] result in
                 guard let self else { return }
                 
-                self.photos = photos.map(viewModel(for:))
-                self.onPhotosUpdate?(.reload)
+                switch result {
+                case .success(let photos):
+                    self.photos = photos.map(viewModel(for:))
+                    self.onPhotosUpdate?(.reload)
+                case .failure(let error):
+                    delegate?.failedToFetchInitialPhotos(error)
+                }
             }
         }
         
@@ -88,7 +99,18 @@ extension PhotosListView {
         func refresh() {
             isLoading = false
             hasMorePages = true
-            fetchInitialPhotos()
+            
+            fetchPhotos(atPage: 1) { [weak self] result in
+                guard let self else { return }
+                
+                switch result {
+                case .success(let photos):
+                    self.photos = photos.map(viewModel(for:))
+                    self.onPhotosUpdate?(.reload)
+                case .failure(let error):
+                    delegate?.failedToRefresh(error)
+                }
+            }
         }
         
         func loadMorePhotos() {
@@ -96,16 +118,21 @@ extension PhotosListView {
                 return
             }
             
-            fetchPhotos(atPage: page + 1) { [weak self] photos in
+            fetchPhotos(atPage: page + 1) { [weak self] result in
                 guard let self else { return }
                 
-                let startIndex = self.photos.endIndex
-                let endIndex = startIndex + photos.count
-                let indexPaths = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0)}
-                
-                self.photos.append(contentsOf: photos.map(viewModel(for:)))
-                self.hasMorePages = !photos.isEmpty
-                self.onPhotosUpdate?(.newRows(indexPaths))
+                switch result {
+                case .success(let photos):
+                    let startIndex = self.photos.endIndex
+                    let endIndex = startIndex + photos.count
+                    let indexPaths = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0)}
+                    
+                    self.photos.append(contentsOf: photos.map(viewModel(for:)))
+                    self.hasMorePages = !photos.isEmpty
+                    self.onPhotosUpdate?(.newRows(indexPaths))
+                case .failure(let error):
+                    delegate?.failedToLoadMorePhotos(error)
+                }
             }
         }
     }

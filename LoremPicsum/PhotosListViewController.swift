@@ -14,8 +14,9 @@ class PhotosListViewController: UIViewController {
     private let viewModel: ViewModel
     
     private lazy var photosListView: PhotosListView = {
-        let view = PhotosListView(viewModel: viewModel.photosListViewModel)
-        view.delegate = self
+        let viewModel = viewModel.photosListViewModel
+        viewModel.delegate = self
+        let view = PhotosListView(viewModel: viewModel)
         return view
     }()
     
@@ -53,14 +54,27 @@ extension PhotosListViewController: PhotosListViewDelegate {
     }
 }
 
+// MARK: - PhotosListView.ViewModel.Delegate
+
+extension PhotosListViewController: PhotosListView.ViewModel.Delegate {
+    func failedToFetchInitialPhotos(_ error: any Error) {
+        showFailedInitialPhotosFetchAlert()
+    }
+    
+    func failedToLoadMorePhotos(_ error: any Error) {
+        showFailedLoadMorePhotosFetchAlert()
+    }
+    
+    func failedToRefresh(_ error: any Error) {
+        showFailedRefreshPhotosAlert()
+    }
+}
+
 // MARK: - Methods
 
 extension PhotosListViewController {
-    
-    /// Presents an alert with information of  the specified photo
-    private func showPhotoInfoAlert(for photo: Photo) {
-        let (title, message) = viewModel.alertInfo(for: photo)
-        
+    /// Returns alert view controller with the specified title and message along with 'ok' action
+    private func alert(title: String?, message: String?) -> UIAlertController {
         let alert = UIAlertController(
             title: title,
             message: message,
@@ -68,18 +82,35 @@ extension PhotosListViewController {
         )
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel))
         
+        return alert
+    }
+    
+    /// Presents an alert with information of  the specified photo
+    private func showPhotoInfoAlert(for photo: Photo) {
+        let info = viewModel.alertInfo(for: photo)
+        let alert = alert(title: info.title, message: info.message)
+        
         self.present(alert, animated: true, completion: nil)
     }
     
     /// Presents an alert instructing the user to tick the checkbox to view photo info
     private func showCheckboxAlert() {
-        let alert = UIAlertController(
-            title: nil,
-            message: "Tick the checkbox to view photo info",
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel))
-        
+        let alert = alert(title: nil, message: "Tick the checkbox to view photo info")
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func showFailedInitialPhotosFetchAlert() {
+        let alert = alert(title: "Error", message: "Failed to fetch photos")
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func showFailedLoadMorePhotosFetchAlert() {
+        let alert = alert(title: "Error", message: "Failed to fetch more photos")
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func showFailedRefreshPhotosAlert() {
+        let alert = alert(title: "Error", message: "Failed to refresh photos")
         self.present(alert, animated: true, completion: nil)
     }
 }
