@@ -10,9 +10,9 @@ import Foundation
 extension PhotosListView {
     class ViewModel {
         protocol Delegate: AnyObject {
-            func failedToFetchInitialPhotos(_ error: Error)
-            func failedToLoadMorePhotos(_ error: Error)
-            func failedToRefresh(_ error: Error)
+            func didFailToFetchInitialPhotos(with error: Error)
+            func didFailToLoadMorePhotos(with error: Error)
+            func didFailToRefresh(with error: Error)
         }
         
         // MARK: - Types
@@ -90,7 +90,7 @@ extension PhotosListView {
                     self.photos = photos.map(viewModel(for:))
                     self.onPhotosUpdate?(.reload)
                 case .failure(let error):
-                    delegate?.failedToFetchInitialPhotos(error)
+                    delegate?.didFailToFetchInitialPhotos(with: error)
                 }
             }
         }
@@ -108,7 +108,7 @@ extension PhotosListView {
                     self.photos = photos.map(viewModel(for:))
                     self.onPhotosUpdate?(.reload)
                 case .failure(let error):
-                    delegate?.failedToRefresh(error)
+                    delegate?.didFailToRefresh(with: error)
                 }
             }
         }
@@ -131,7 +131,7 @@ extension PhotosListView {
                     self.hasMorePages = !photos.isEmpty
                     self.onPhotosUpdate?(.newRows(indexPaths))
                 case .failure(let error):
-                    delegate?.failedToLoadMorePhotos(error)
+                    delegate?.didFailToLoadMorePhotos(with: error)
                 }
             }
         }

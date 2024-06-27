@@ -57,15 +57,15 @@ extension PhotosListViewController: PhotosListViewDelegate {
 // MARK: - PhotosListView.ViewModel.Delegate
 
 extension PhotosListViewController: PhotosListView.ViewModel.Delegate {
-    func failedToFetchInitialPhotos(_ error: any Error) {
+    func didFailToFetchInitialPhotos(with error: any Error) {
         showFailedInitialPhotosFetchAlert()
     }
     
-    func failedToLoadMorePhotos(_ error: any Error) {
+    func didFailToLoadMorePhotos(with error: any Error) {
         showFailedLoadMorePhotosFetchAlert()
     }
     
-    func failedToRefresh(_ error: any Error) {
+    func didFailToRefresh(with error: any Error) {
         showFailedRefreshPhotosAlert()
     }
 }
