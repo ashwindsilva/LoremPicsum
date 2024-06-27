@@ -7,16 +7,35 @@
 
 import Foundation
 
-// TODO: - Implement network layer
-// TODO: - Handle errors
+enum RemotePhotosServiceError: Error {
+    case invalidResponse
+    case badResponse(URLResponse)
+    case noData
+    case decoding(Error)
+}
 
 class RemotePhotosService: PhotosService {
-    func getPhotos(at page: Int, completion: @escaping (Result<[Photo], PhotosServiceError>) -> ()) {
+    func getPhotos(at page: Int, completion: @escaping (Result<[Photo], Error>) -> ()) {
         let url = URL(string: "https://picsum.photos/v2/list?page=\(page)")!
         
         URLSession.shared.dataTask(with: url) { data, response, error in
+            guard error == nil else {
+                completion(.failure(error!))
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                completion(.failure(RemotePhotosServiceError.invalidResponse))
+                return
+            }
+            
+            guard case let statusCode = response.statusCode, (200...300).contains(statusCode) else {
+                completion(.failure(RemotePhotosServiceError.badResponse(response)))
+                return
+            }
+            
             guard let data else {
-                completion(.failure(.networkError))
+                completion(.failure(RemotePhotosServiceError.noData))
                 return
             }
             
@@ -24,7 +43,7 @@ class RemotePhotosService: PhotosService {
                 let photos = try JSONDecoder().decode([Photo].self, from: data)
                 completion(.success(photos))
             } catch {
-                completion(.failure(.decodingError))
+                completion(.failure(RemotePhotosServiceError.decoding(error)))
             }
         }.resume()
     }

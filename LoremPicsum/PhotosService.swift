@@ -7,11 +7,6 @@
 
 import Foundation
 
-enum PhotosServiceError: Error {
-    case networkError
-    case decodingError
-}
-
 protocol PhotosService {
-    func getPhotos(at page: Int, completion: @escaping (Result<[Photo], PhotosServiceError>) -> ())
+    func getPhotos(at page: Int, completion: @escaping (Result<[Photo], any Error>) -> ())
 }
