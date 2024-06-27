@@ -78,26 +78,106 @@
 		A25A90CF2C29D550005C3DC2 /* LoremPicsum */ = {
 			isa = PBXGroup;
 			children = (
-				A2ED768E2C2BCCBC00BBE64A /* Coordinator.swift */,
+				A2D8A4ED2C2DA4DD005035F4 /* Resources */,
+				A2D8A4EA2C2DA34A005035F4 /* Coordinators */,
+				A2D8A4E42C2DA2BD005035F4 /* Core */,
 				A25A90D02C29D550005C3DC2 /* AppDelegate.swift */,
-				A25A90D42C29D550005C3DC2 /* PhotosListViewController.swift */,
-				A2ED76942C2BDE3200BBE64A /* PhotosListViewController_ViewModel.swift */,
-				A25A90E42C29DC7C005C3DC2 /* PhotosListView.swift */,
-				A25A90F02C29F948005C3DC2 /* PhotosListView_ViewModel.swift */,
-				A25A90E62C29DFD2005C3DC2 /* PhotoTableViewCell.swift */,
-				A2ED76882C2AEA0F00BBE64A /* PhotoTableViewCell_ViewModel.swift */,
-				A25A90E82C29ED82005C3DC2 /* Photo.swift */,
-				A25A90EA2C29EDF3005C3DC2 /* PhotosService.swift */,
-				A2ED768A2C2B94A200BBE64A /* ImageLoader.swift */,
-				A25A90D92C29D552005C3DC2 /* Assets.xcassets */,
-				A25A90DB2C29D552005C3DC2 /* LaunchScreen.storyboard */,
 				A25A90DE2C29D552005C3DC2 /* Info.plist */,
-				A2ED768C2C2BCA4B00BBE64A /* LaunchScreenViewController.swift */,
-				A2ED76902C2BCCDD00BBE64A /* AppCoordinator.swift */,
-				A2ED76982C2BE99A00BBE64A /* RemotePhotoService.swift */,
-				A20C20F02C2D2A7F0034D3C8 /* RemoteImageLoader.swift */,
 			);
 			path = LoremPicsum;
+			sourceTree = "<group>";
+		};
+		A2D8A4E42C2DA2BD005035F4 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A2D8A4EC2C2DA4C4005035F4 /* Services */,
+				A2D8A4E62C2DA2E2005035F4 /* Photos */,
+				A2D8A4E52C2DA2CC005035F4 /* LaunchScreen */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		A2D8A4E52C2DA2CC005035F4 /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				A2ED768C2C2BCA4B00BBE64A /* LaunchScreenViewController.swift */,
+				A25A90DB2C29D552005C3DC2 /* LaunchScreen.storyboard */,
+			);
+			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
+		A2D8A4E62C2DA2E2005035F4 /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				A2D8A4E72C2DA2F8005035F4 /* Models */,
+				A2D8A4E82C2DA300005035F4 /* Views */,
+				A2D8A4E92C2DA308005035F4 /* ViewModels */,
+				A2D8A4EB2C2DA463005035F4 /* Services */,
+			);
+			path = Photos;
+			sourceTree = "<group>";
+		};
+		A2D8A4E72C2DA2F8005035F4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A25A90E82C29ED82005C3DC2 /* Photo.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A2D8A4E82C2DA300005035F4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A25A90E42C29DC7C005C3DC2 /* PhotosListView.swift */,
+				A25A90D42C29D550005C3DC2 /* PhotosListViewController.swift */,
+				A25A90E62C29DFD2005C3DC2 /* PhotoTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A2D8A4E92C2DA308005035F4 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				A25A90F02C29F948005C3DC2 /* PhotosListView_ViewModel.swift */,
+				A2ED76942C2BDE3200BBE64A /* PhotosListViewController_ViewModel.swift */,
+				A2ED76882C2AEA0F00BBE64A /* PhotoTableViewCell_ViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		A2D8A4EA2C2DA34A005035F4 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				A2ED768E2C2BCCBC00BBE64A /* Coordinator.swift */,
+				A2ED76902C2BCCDD00BBE64A /* AppCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		A2D8A4EB2C2DA463005035F4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A25A90EA2C29EDF3005C3DC2 /* PhotosService.swift */,
+				A2ED76982C2BE99A00BBE64A /* RemotePhotoService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A2D8A4EC2C2DA4C4005035F4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A20C20F02C2D2A7F0034D3C8 /* RemoteImageLoader.swift */,
+				A2ED768A2C2B94A200BBE64A /* ImageLoader.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A2D8A4ED2C2DA4DD005035F4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A25A90D92C29D552005C3DC2 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
