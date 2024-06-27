@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum RemoteImageLoaderError: Error {
+    case unknown(Error)
+    case noData
+}
+
 /// Utility class for asynchronously loading images from remote URLs
 class RemoteImageLoader: ImageLoader {
     deinit {
@@ -21,12 +26,12 @@ class RemoteImageLoader: ImageLoader {
     // MARK: - Methods
     
     @discardableResult
-    func loadImage(from url: URL, completion: @escaping (UIImage?) -> ()) -> UUID? {
+    func loadImage(from url: URL, completion: @escaping (Result<UIImage, Error>) -> ()) -> UUID? {
         let key = url.absoluteString as NSString
         
         // If image is cached immediately return the image
         if let image = cache.object(forKey: key) {
-            completion(image)
+            completion(.success(image))
             return nil
         }
         
@@ -40,13 +45,17 @@ class RemoteImageLoader: ImageLoader {
                 activeTasks.removeValue(forKey: uuid)
             }
             
-            guard error == nil, let data, let image = UIImage(data: data) else {
-                // TODO: handle error
-                completion(nil)
+            guard error == nil else {
+                completion(.failure(RemoteImageLoaderError.unknown(error!)))
                 return
             }
             
-            completion(image)
+            guard let data, let image = UIImage(data: data) else {
+                completion(.failure(RemoteImageLoaderError.noData))
+                return
+            }
+            
+            completion(.success(image))
             
             // Cache the image
             self.cache.setObject(image, forKey: key)

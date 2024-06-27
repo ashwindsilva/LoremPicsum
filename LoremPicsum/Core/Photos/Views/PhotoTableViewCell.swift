@@ -121,11 +121,16 @@ class PhotoTableViewCell: UITableViewCell {
                 width: Int(imageSize),
                 height: Int(imageSize)
             )
-        ) { [weak self] image in
+        ) { [weak self] result in
+            do {
+                let image = try result.get()
                 DispatchQueue.main.async {
                     self?.photoImageView.image = image
                 }
+            } catch {
+                
             }
+        }
         
         viewModel.onChecked = { [weak self] _ in
             self?.updateCheckbox()

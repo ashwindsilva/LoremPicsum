@@ -12,6 +12,7 @@ enum RemotePhotosServiceError: Error {
     case badResponse(URLResponse)
     case noData
     case decoding(Error)
+    case unknown(Error)
 }
 
 class RemotePhotosService: PhotosService {
@@ -20,7 +21,7 @@ class RemotePhotosService: PhotosService {
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
-                completion(.failure(error!))
+                completion(.failure(RemotePhotosServiceError.unknown(error!)))
                 return
             }
             

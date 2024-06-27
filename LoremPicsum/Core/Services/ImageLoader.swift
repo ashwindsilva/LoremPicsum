@@ -8,6 +8,6 @@
 import UIKit
 
 protocol ImageLoader {
-    func loadImage(from url: URL, completion: @escaping (UIImage?) -> ()) -> UUID?
+    func loadImage(from url: URL, completion: @escaping (Result<UIImage, Error>) -> ()) -> UUID?
     func cancelLoad(_ uuid: UUID)
 }
