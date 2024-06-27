@@ -70,26 +70,22 @@ extension PhotosListView {
         viewModel.onPhotosUpdate = { [weak self] type in
             guard let self else { return }
             
-            DispatchQueue.main.async {
-                switch type {
-                case .reload:
-                    self.tableView.reloadData()
-                    self.tableView.refreshControl?.endRefreshing()
-                case .newRows(let indexPaths):
-                    self.tableView.insertRows(at: indexPaths, with: .automatic)
-                }
+            switch type {
+            case .reload:
+                self.tableView.reloadData()
+                self.tableView.refreshControl?.endRefreshing()
+            case .newRows(let indexPaths):
+                self.tableView.insertRows(at: indexPaths, with: .automatic)
             }
         }
         
         viewModel.onLoading = { [weak self] isLoading in
             guard let self else { return }
             
-            DispatchQueue.main.async {
-                if isLoading {
-                    self.tableView.tableFooterView = self.makeTableViewLoadingFooter()
-                } else {
-                    self.tableView.tableFooterView = nil
-                }
+            if isLoading {
+                self.tableView.tableFooterView = self.makeTableViewLoadingFooter()
+            } else {
+                self.tableView.tableFooterView = nil
             }
         }
     }

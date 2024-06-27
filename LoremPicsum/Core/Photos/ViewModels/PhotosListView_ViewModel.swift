@@ -31,7 +31,9 @@ extension PhotosListView {
         private var hasMorePages: Bool
         private var isLoading: Bool {
             didSet {
-                onLoading?(isLoading)
+                DispatchQueue.main.async {
+                    self.onLoading?(self.isLoading)
+                }
             }
         }
         
@@ -65,11 +67,13 @@ extension PhotosListView {
                 
                 defer { self.isLoading = false }
                 
-                if let photos = try? result.get(), photos.isEmpty == false {
-                    self.page = page
+                DispatchQueue.main.async {
+                    if let photos = try? result.get(), photos.isEmpty == false {
+                        self.page = page
+                    }
+                    
+                    completion(result)
                 }
-                
-                completion(result)
             }
         }
         
