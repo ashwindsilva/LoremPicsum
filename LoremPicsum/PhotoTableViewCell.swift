@@ -42,7 +42,6 @@ class PhotoTableViewCell: UITableViewCell {
     private lazy var checkbox: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "checkbox_outline"), for: .normal)
         button.tintColor = .primaryText
         button.addTarget(self, action: #selector(toggleCheckbox), for: .touchUpInside)
         return button
@@ -84,6 +83,7 @@ class PhotoTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         setupView()
     }
     
@@ -94,8 +94,6 @@ class PhotoTableViewCell: UITableViewCell {
     // MARK: - Methods
     
     private  func setupView() {
-        selectionStyle = .none
-        
         contentView.addSubview(horizontalStackView)
         
         NSLayoutConstraint.activate([
@@ -119,7 +117,11 @@ class PhotoTableViewCell: UITableViewCell {
         updateCheckbox()
         
         imageLoadTaskID = viewModel.imageLoader.loadImage(
-            from: viewModel.imageURL(width: Int(imageSize), height: Int(imageSize))) { [weak self] image in
+            from: viewModel.imageURL(
+                width: Int(imageSize),
+                height: Int(imageSize)
+            )
+        ) { [weak self] image in
                 DispatchQueue.main.async {
                     self?.photoImageView.image = image
                 }
@@ -147,9 +149,7 @@ class PhotoTableViewCell: UITableViewCell {
     }
     
     private func updateCheckbox() {
-        checkbox.setImage(
-            viewModel?.isChecked ?? false ? UIImage(named: "checkbox") : UIImage(named: "checkbox_outline"),
-            for: .normal
-        )
+        let image = (viewModel?.isChecked ?? false) ? UIImage(named: "checkbox") : UIImage(named: "checkbox_outline")
+        checkbox.setImage(image, for: .normal)
     }
 }

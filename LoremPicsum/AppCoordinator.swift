@@ -27,6 +27,7 @@ extension AppCoordinator: Coordinator {
         let launchScreenController: LaunchScreenViewController = .init()
         window.rootViewController = launchScreenController
         
+        // Set PhotosListViewController as the root view controller after 5s
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
             let viewModel: PhotosListViewController.ViewModel = .init(
                 photosService: RemotePhotosService(),

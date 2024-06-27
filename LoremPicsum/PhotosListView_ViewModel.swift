@@ -8,12 +8,13 @@
 import Foundation
 
 extension PhotosListView {
-    enum UpdateType {
-        case reload
-        case newRows([IndexPath])
-    }
-    
     class ViewModel {
+        // MARK: - Types
+        
+        enum UpdateType {
+            case reload
+            case newRows([IndexPath])
+        }
         
         // MARK: - Properties
         
@@ -101,7 +102,7 @@ extension PhotosListView {
                 let startIndex = self.photos.endIndex
                 let endIndex = startIndex + photos.count
                 let indexPaths = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0)}
-
+                
                 self.photos.append(contentsOf: photos.map(viewModel(for:)))
                 self.hasMorePages = !photos.isEmpty
                 self.onPhotosUpdate?(.newRows(indexPaths))

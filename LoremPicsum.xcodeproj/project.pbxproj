@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A20C20F12C2D2A7F0034D3C8 /* RemoteImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C20F02C2D2A7F0034D3C8 /* RemoteImageLoader.swift */; };
 		A25A90D12C29D550005C3DC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25A90D02C29D550005C3DC2 /* AppDelegate.swift */; };
 		A25A90D52C29D550005C3DC2 /* PhotosListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25A90D42C29D550005C3DC2 /* PhotosListViewController.swift */; };
 		A25A90DA2C29D552005C3DC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A25A90D92C29D552005C3DC2 /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A20C20F02C2D2A7F0034D3C8 /* RemoteImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageLoader.swift; sourceTree = "<group>"; };
 		A25A90CD2C29D550005C3DC2 /* LoremPicsum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoremPicsum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A25A90D02C29D550005C3DC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A25A90D42C29D550005C3DC2 /* PhotosListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosListViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				A2ED768C2C2BCA4B00BBE64A /* LaunchScreenViewController.swift */,
 				A2ED76902C2BCCDD00BBE64A /* AppCoordinator.swift */,
 				A2ED76982C2BE99A00BBE64A /* RemotePhotoService.swift */,
+				A20C20F02C2D2A7F0034D3C8 /* RemoteImageLoader.swift */,
 			);
 			path = LoremPicsum;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 				A2ED768F2C2BCCBC00BBE64A /* Coordinator.swift in Sources */,
 				A25A90EB2C29EDF3005C3DC2 /* PhotosService.swift in Sources */,
 				A25A90E92C29ED82005C3DC2 /* Photo.swift in Sources */,
+				A20C20F12C2D2A7F0034D3C8 /* RemoteImageLoader.swift in Sources */,
 				A2ED768D2C2BCA4B00BBE64A /* LaunchScreenViewController.swift in Sources */,
 				A25A90F12C29F948005C3DC2 /* PhotosListView_ViewModel.swift in Sources */,
 			);

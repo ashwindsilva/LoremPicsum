@@ -50,9 +50,11 @@ class PhotosListView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Methods
-    
+}
+
+// MARK: - Methods
+
+extension PhotosListView {
     private func setupView() {
         addSubview(tableView)
         
@@ -97,6 +99,7 @@ class PhotosListView: UIView {
         viewModel.refresh()
     }
     
+    /// Returns a view with an activity indicator at its center
     private func makeTableViewLoadingFooter() -> UIView {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         
@@ -108,6 +111,17 @@ class PhotosListView: UIView {
         view.addSubview(activityIndicator)
         
         return view
+    }
+    
+    /// Determines if the scroll view should paginate based on its scroll position
+    private func shouldPaginate(_ scrollView: UIScrollView) -> Bool {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        let threshold = (height / 2)
+        
+        return offsetY > contentHeight - height - threshold
     }
 }
 
@@ -133,13 +147,7 @@ extension PhotosListView: UITableViewDataSource {
 
 extension PhotosListView: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        let height = scrollView.frame.size.height
-        
-        let threshold = (height / 2)
-        
-        if offsetY > contentHeight - height - threshold {
+        if shouldPaginate(scrollView) {
             viewModel.loadMorePhotos()
         }
     }

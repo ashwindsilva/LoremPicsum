@@ -8,8 +8,12 @@
 import Foundation
 
 extension PhotosListViewController {
-    class ViewModel {        
+    class ViewModel {  
+        // MARK: - Properties
+        
         let photosListViewModel: PhotosListView.ViewModel
+        
+        // MARK: - Init
         
         init(photosService: PhotosService, imageLoader: ImageLoader) {
             self.photosListViewModel = .init(
@@ -18,6 +22,9 @@ extension PhotosListViewController {
             )
         }
         
+        // MARK: - Methods
+        
+        /// Generates alert info for the specified photo
         func alertInfo(for photo: Photo) -> (title: String, message: String?) {
             let title: String = "Info"
             let message: String? = {

@@ -46,7 +46,7 @@ class PhotosListViewController: UIViewController {
 extension PhotosListViewController: PhotosListViewDelegate {
     func didSelect(_ photo: Photo, isChecked: Bool) {
         if isChecked {
-            showPhotoInfo(for: photo)
+            showPhotoInfoAlert(for: photo)
         } else {
             showCheckboxAlert()
         }
@@ -56,7 +56,9 @@ extension PhotosListViewController: PhotosListViewDelegate {
 // MARK: - Methods
 
 extension PhotosListViewController {
-    private func showPhotoInfo(for photo: Photo) {
+    
+    /// Presents an alert with information of  the specified photo
+    private func showPhotoInfoAlert(for photo: Photo) {
         let (title, message) = viewModel.alertInfo(for: photo)
         
         let alert = UIAlertController(
@@ -69,10 +71,11 @@ extension PhotosListViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    /// Presents an alert instructing the user to tick the checkbox to view photo info
     private func showCheckboxAlert() {
         let alert = UIAlertController(
             title: nil,
-            message: "Tick the checkbox to view info",
+            message: "Tick the checkbox to view photo info",
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel))
