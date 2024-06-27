@@ -17,6 +17,7 @@ class PhotosListViewController: UIViewController {
         let viewModel = viewModel.photosListViewModel
         viewModel.delegate = self
         let view = PhotosListView(viewModel: viewModel)
+        view.delegate = self
         return view
     }()
     
