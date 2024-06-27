@@ -12,11 +12,15 @@ class AppCoordinator {
     // MARK: - Properties
     
     private let window: UIWindow
+    private let photoService: PhotosService
+    private let imageLoader: ImageLoader
     
     // MARK: - Init
     
-    init(window: UIWindow) {
+    init(window: UIWindow, photoService: PhotosService, imageLoader: ImageLoader) {
         self.window = window
+        self.photoService = photoService
+        self.imageLoader = imageLoader
     }
 }
 
@@ -29,11 +33,13 @@ extension AppCoordinator: Coordinator {
         
         // Set PhotosListViewController as the root view controller after 5s
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+            guard let self else { return }
+            
             let viewModel: PhotosListViewController.ViewModel = .init(
-                photosService: RemotePhotosService(),
-                imageLoader: RemoteImageLoader()
+                photosService: self.photoService,
+                imageLoader: self.imageLoader
             )
-            self?.window.rootViewController = PhotosListViewController(viewModel: viewModel)
+            self.window.rootViewController = PhotosListViewController(viewModel: viewModel)
         }
     }
 }
