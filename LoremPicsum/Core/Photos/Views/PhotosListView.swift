@@ -31,6 +31,14 @@ class PhotosListView: UIView {
         return tableView
     }()
     
+    private lazy var emptyTableViewLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No photos to display. Pull to refresh"
+        label.textColor = .secondaryText
+        label.textAlignment = .center
+        return label
+    }()
+    
     // MARK: - Properties
     
     private let viewModel: ViewModel
@@ -82,9 +90,15 @@ extension PhotosListView {
         viewModel.onLoading = { [weak self] isLoading in
             guard let self else { return }
             
-            if isLoading {
+            switch (isLoading, viewModel.photos.isEmpty) {
+            case (true, true):
+                self.tableView.backgroundView = self.makeTableViewLoadingIndicator()
+            case (true, false):
                 self.tableView.tableFooterView = self.makeTableViewLoadingFooter()
-            } else {
+            case (false, true):
+                self.tableView.backgroundView = emptyTableViewLabel
+            case (false, false):
+                self.tableView.backgroundView = nil
                 self.tableView.tableFooterView = nil
             }
         }
@@ -107,6 +121,14 @@ extension PhotosListView {
         view.addSubview(activityIndicator)
         
         return view
+    }
+    
+    /// Returns a spinning activity indicator
+    private func makeTableViewLoadingIndicator() -> UIActivityIndicatorView {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.startAnimating()
+        
+        return activityIndicator
     }
     
     /// Determines if the scroll view should paginate based on its scroll position
