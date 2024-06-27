@@ -37,7 +37,7 @@ class PhotosListViewController: UIViewController {
     override func loadView() {
         view = photosListView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -91,27 +91,33 @@ extension PhotosListViewController {
         let info = viewModel.alertInfo(for: photo)
         let alert = alert(title: info.title, message: info.message)
         
-        self.present(alert, animated: true, completion: nil)
+        present(alert)
     }
     
     /// Presents an alert instructing the user to tick the checkbox to view photo info
     private func showCheckboxAlert() {
         let alert = alert(title: nil, message: "Tick the checkbox to view photo info")
-        self.present(alert, animated: true, completion: nil)
+        present(alert)
     }
     
     private func showFailedInitialPhotosFetchAlert() {
         let alert = alert(title: "Error", message: "Failed to fetch photos")
-        self.present(alert, animated: true, completion: nil)
+        present(alert)
     }
     
     private func showFailedLoadMorePhotosFetchAlert() {
         let alert = alert(title: "Error", message: "Failed to fetch more photos")
-        self.present(alert, animated: true, completion: nil)
+        present(alert)
     }
     
     private func showFailedRefreshPhotosAlert() {
         let alert = alert(title: "Error", message: "Failed to refresh photos")
-        self.present(alert, animated: true, completion: nil)
+        present(alert)
+    }
+    
+    private func present(_ alert: UIAlertController) {
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
